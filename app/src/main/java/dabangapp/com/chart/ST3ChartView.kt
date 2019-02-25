@@ -335,8 +335,8 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     canvas.drawCircle(x, y, dataSet.holeRadius, this.paint)
                 }
             }
+            canvas.restore()
         }
-        canvas.restore()
     }
 
     private fun textSize(text: String, fontSize: Float): Rect {
