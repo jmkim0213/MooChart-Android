@@ -12,6 +12,7 @@ import dabangapp.com.chart.base.ST3ChartAxis
 import dabangapp.com.chart.line.ST3ChartLineData
 import dabangapp.com.chart.line.ST3ChartLineDataEntry
 import dabangapp.com.chart.line.ST3ChartLineDataSet
+import dabangapp.com.chart.utils.TypedValueUtils
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
@@ -37,17 +38,17 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
 
     private fun initChartView() {
         mChartView?.delegate = this
-        mChartView?.leftMargin = dpToPixel(35.0f)
-        mChartView?.rightMargin = dpToPixel(20.0f)
-        mChartView?.bottomMargin = dpToPixel(25.0f)
-        mChartView?.axisMargin = dpToPixel(2.0f)
-        mChartView?.lineAxisMargin = dpToPixel(3.0f)
-        mChartView?.rightAxisMargin = dpToPixel(3.0f)
+        mChartView?.leftMargin = TypedValueUtils.dpToPixel(this, 35.0f)
+        mChartView?.rightMargin = TypedValueUtils.dpToPixel(this, 20.0f)
+        mChartView?.bottomMargin = TypedValueUtils.dpToPixel(this, 25.0f)
+        mChartView?.axisMargin = TypedValueUtils.dpToPixel(this, 2.0f)
+        mChartView?.lineAxisMargin = TypedValueUtils.dpToPixel(this, 3.0f)
+        mChartView?.rightAxisMargin = TypedValueUtils.dpToPixel(this, 3.0f)
 
         mChartView?.highlightIndicatorColor = 0xFF888888.toInt()
         mChartView?.horizontalIndicatorColor = 0xFFEDEDED.toInt()
-        mChartView?.highlightIndicatorWidth = dpToPixel(0.5f)
-        mChartView?.horizontalIndicatorWidth = dpToPixel(1.0f)
+        mChartView?.highlightIndicatorWidth = TypedValueUtils.dpToPixel(this, 0.5f)
+        mChartView?.horizontalIndicatorWidth = TypedValueUtils.dpToPixel(this, 1.0f)
     }
 
     private fun initChartAxis() {
@@ -58,11 +59,11 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         }
 
         mChartView?.axises = axises
-        mChartView?.axisFont = spToPixel(10.0f)
+        mChartView?.axisFont = TypedValueUtils.spToPixel(this, 10.0f)
         mChartView?.axisColor = 0xFF444444.toInt()
         mChartView?.axisDividerColor = 0xFFD3D3D3.toInt()
         mChartView?.axisInterval = mNumberOfMonth / 4
-        mChartView?.axisDividerMargin = dpToPixel(21.0f)
+        mChartView?.axisDividerMargin = TypedValueUtils.dpToPixel(this, 21.0f)
     }
 
     private fun initChartBar() {
@@ -112,10 +113,10 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         dataSet1.circleColor = 0xFF80DCBC.toInt()
         dataSet1.holeColor = Color.WHITE
         dataSet1.circleBorderColor = Color.WHITE
-        dataSet1.circleRadius = dpToPixel(4.0f)
-        dataSet1.holeRadius = dpToPixel(1.0f)
-        dataSet1.circleBorder = dpToPixel(1.0f)
-        dataSet1.width = dpToPixel(1.0f)
+        dataSet1.circleRadius = TypedValueUtils.dpToPixel(this, 4.0f)
+        dataSet1.holeRadius = TypedValueUtils.dpToPixel(this, 1.0f)
+        dataSet1.circleBorder = TypedValueUtils.dpToPixel(this, 1.0f)
+        dataSet1.width = TypedValueUtils.dpToPixel(this, 1.0f)
 
         val entries2: ArrayList<ST3ChartLineDataEntry> = ArrayList()
         for (i in 0..(this.mNumberOfMonth - 1)) {
@@ -129,26 +130,18 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         dataSet2.circleColor = 0xFF6CAAE7.toInt()
         dataSet2.holeColor = Color.WHITE
         dataSet2.circleBorderColor = Color.WHITE
-        dataSet2.circleRadius = dpToPixel(4.0f)
-        dataSet2.holeRadius = dpToPixel(1.0f)
-        dataSet2.circleBorder = dpToPixel(1.0f)
-        dataSet2.width = dpToPixel(1.0f)
+        dataSet2.circleRadius = TypedValueUtils.dpToPixel(this, 4.0f)
+        dataSet2.holeRadius = TypedValueUtils.dpToPixel(this, 1.0f)
+        dataSet2.circleBorder = TypedValueUtils.dpToPixel(this, 1.0f)
+        dataSet2.width = TypedValueUtils.dpToPixel(this, 1.0f)
 
         val data = ST3ChartLineData(listOf(dataSet1, dataSet2))
         data.maxValue = 20000.0f
 
         mChartView?.lineData = data
-        mChartView?.lineAxisFont = spToPixel(10.0f)
+        mChartView?.lineAxisFont = TypedValueUtils.spToPixel(this, 10.0f)
         mChartView?.lineAxisColor = 0xFF444444.toInt()
         mChartView?.lineAxisInterval = (data.maxValue / 5).toInt()
-    }
-
-    private fun dpToPixel(dp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
-    }
-
-    private fun spToPixel(sp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics)
     }
 
     override fun chartViewLineAxisText(chartView: ST3ChartView, value: Float, index: Int): String {
