@@ -11,7 +11,8 @@ import dabangapp.com.chart.line.ST3ChartLineData
 import dabangapp.com.chart.utils.DBLog
 
 interface ST3ChartViewDelegate {
-    fun chartViewLineAxisText(chartView: ST3ChartView, value: Float): String
+    fun chartViewLineAxisText(chartView: ST3ChartView, value: Float, index: Int): String
+    fun chartViewRightAxisText(chartView: ST3ChartView, value: Float, index: Int): String
     fun chartViewAxisText(chartView: ST3ChartView, axis: ST3ChartAxis): String
     fun chartViewDidSelected(chartView: ST3ChartView, axis: ST3ChartAxis?)
 }
@@ -29,12 +30,15 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var axisInterval                : Int                   = 3
     var axisDividerColor            : Int                   = Color.LTGRAY
     var axisBackgroundColor         : Int                   = Color.WHITE
+    var axisDividerMargin           : Float                 = 21.0f
 
     var lineAxisFont                : Float                 = 8.0f
     var lineAxisColor               : Int                   = Color.BLACK
     var lineAxisInterval            : Int                   = 2
 
     var axisMargin                  : Float                 = 3.0f
+    var lineAxisMargin              : Float                 = 3.0f
+    var rightAxisMargin             : Float                 = 3.0f
 
     var leftMargin                  : Float                 = 30.0f
     var rightMargin                 : Float                 = 15.0f
@@ -122,28 +126,40 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val chartLeft = this.chartArea.left
             val chartWidth = this.chartArea.width()
             val chartHeight = this.chartArea.height()
+            val viewWidth = this.viewSize.width()
 
             val maxValue = it.maxValue
             val axisHeight = chartHeight / maxValue
 
             var value = this.lineAxisInterval
+            var index = 0
             do {
-                val text = this.lineAxisText(value.toFloat())
-                val textSize = this.textSize(text, this.lineAxisFont)
+                val leftText = this.lineAxisText(value.toFloat(), index)
+                val rightText = this.rightAxisText(value.toFloat(), index)
+                val leftTextSize = this.textSize(leftText, this.lineAxisFont)
 
                 val indicatorY = chartHeight - (axisHeight * value)
-                val x = chartLeft - textSize.width()
-                val y = indicatorY + (textSize.height() / 2)
+                val x = chartLeft - leftTextSize.width() - this.lineAxisMargin
 
+                val y = indicatorY + (leftTextSize.height() / 2)
+
+                // draw left axis
+                this.paint.color = this.lineAxisColor
+                this.paint.textSize = this.lineAxisFont
+                canvas.drawText(leftText, x, y, this.paint)
+
+                // draw right axis
+                val rightX = (viewWidth - this.rightMargin) + this.rightAxisMargin
+                this.paint.color = this.lineAxisColor
+                this.paint.textSize = this.lineAxisFont
+                canvas.drawText(rightText, rightX, y, this.paint)
+                // draw indicator
                 val rect = RectF(chartLeft, indicatorY, chartLeft + chartWidth, indicatorY + this.horizontalIndicatorWidth)
 
                 this.paint.color = this.horizontalIndicatorColor
                 canvas.drawRect(rect, this.paint)
 
-                this.paint.color = this.lineAxisColor
-                this.paint.textSize = this.lineAxisFont
-                canvas.drawText(text, x, y, this.paint)
-
+                index += 1
                 value = (value + this.lineAxisInterval)
             } while (value < maxValue)
 
@@ -330,8 +346,12 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return rect
     }
 
-    private fun lineAxisText(value: Float): String {
-        return this.delegate?.chartViewLineAxisText(this, value) ?: "$value"
+    private fun lineAxisText(value: Float, index: Int): String {
+        return this.delegate?.chartViewLineAxisText(this, value, index) ?: "$value"
+    }
+
+    private fun rightAxisText(value: Float, index: Int): String {
+        return this.delegate?.chartViewRightAxisText(this, value, index) ?: "$value"
     }
 
     private fun axisText(axis: ST3ChartAxis): String {

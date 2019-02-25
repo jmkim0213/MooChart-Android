@@ -32,16 +32,17 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         initChartLine()
 
         mChartView?.setBackgroundColor(0xFFFEFEFE.toInt())
-        mChartView?.delegate = this
         mChartView?.reloadData()
     }
 
     private fun initChartView() {
-//        chartView?.delegate = self
-        mChartView?.leftMargin = dpToPixel(30.0f)
-        mChartView?.rightMargin = dpToPixel(15.0f)
+        mChartView?.delegate = this
+        mChartView?.leftMargin = dpToPixel(35.0f)
+        mChartView?.rightMargin = dpToPixel(20.0f)
         mChartView?.bottomMargin = dpToPixel(25.0f)
-        mChartView?.axisMargin = dpToPixel(3.0f)
+        mChartView?.axisMargin = dpToPixel(2.0f)
+        mChartView?.lineAxisMargin = dpToPixel(3.0f)
+        mChartView?.rightAxisMargin = dpToPixel(3.0f)
 
         mChartView?.highlightIndicatorColor = 0xFF888888.toInt()
         mChartView?.horizontalIndicatorColor = 0xFFEDEDED.toInt()
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         mChartView?.horizontalIndicatorWidth = dpToPixel(1.0f)
     }
 
-    fun initChartAxis() {
+    private fun initChartAxis() {
         val axises = ArrayList<ST3ChartAxis>()
         for (i in 0..(mNumberOfMonth - 1)) {
             val text = String.format("2019.%02d", i + 1)
@@ -57,10 +58,11 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         }
 
         mChartView?.axises = axises
-        mChartView?.axisFont = spToPixel(9.0f)
+        mChartView?.axisFont = spToPixel(10.0f)
         mChartView?.axisColor = 0xFF444444.toInt()
-        mChartView?.axisDividerColor = 0xFFDDDDDD.toInt()
+        mChartView?.axisDividerColor = 0xFFD3D3D3.toInt()
         mChartView?.axisInterval = mNumberOfMonth / 4
+        mChartView?.axisDividerMargin = dpToPixel(21.0f)
     }
 
     private fun initChartBar() {
@@ -106,11 +108,11 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         }
 
         var dataSet1 = ST3ChartLineDataSet(entries1)
-        dataSet1.color = 0xFF76D6B5.toInt()
-        dataSet1.circleColor = 0xFF76D6B5.toInt()
+        dataSet1.color = 0xFF80DCBC.toInt()
+        dataSet1.circleColor = 0xFF80DCBC.toInt()
         dataSet1.holeColor = Color.WHITE
         dataSet1.circleBorderColor = Color.WHITE
-        dataSet1.circleRadius = dpToPixel(5.0f)
+        dataSet1.circleRadius = dpToPixel(4.0f)
         dataSet1.holeRadius = dpToPixel(1.0f)
         dataSet1.circleBorder = dpToPixel(1.0f)
         dataSet1.width = dpToPixel(1.0f)
@@ -123,23 +125,20 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         }
 
         var dataSet2 = ST3ChartLineDataSet(entries2)
-
-        dataSet2.color = 0XFF7BB5F0.toInt()
-        dataSet2.circleColor = 0XFF7BB5F0.toInt()
+        dataSet2.color = 0xFF6CAAE7.toInt()
+        dataSet2.circleColor = 0xFF6CAAE7.toInt()
         dataSet2.holeColor = Color.WHITE
         dataSet2.circleBorderColor = Color.WHITE
-        dataSet2.circleRadius = dpToPixel(5.0f)
+        dataSet2.circleRadius = dpToPixel(4.0f)
         dataSet2.holeRadius = dpToPixel(1.0f)
         dataSet2.circleBorder = dpToPixel(1.0f)
         dataSet2.width = dpToPixel(1.0f)
-
-
 
         val data = ST3ChartLineData(listOf(dataSet1, dataSet2))
         data.maxValue = 20000.0f
 
         mChartView?.lineData = data
-        mChartView?.lineAxisFont = spToPixel(8.0f)
+        mChartView?.lineAxisFont = spToPixel(10.0f)
         mChartView?.lineAxisColor = 0xFF444444.toInt()
         mChartView?.lineAxisInterval = (data.maxValue / 5).toInt()
     }
@@ -152,8 +151,16 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics)
     }
 
-    override fun chartViewLineAxisText(chartView: ST3ChartView, value: Float): String {
+    override fun chartViewLineAxisText(chartView: ST3ChartView, value: Float, index: Int): String {
         return String.format("%.1f억", (value / 10000))
+    }
+
+    override fun chartViewRightAxisText(chartView: ST3ChartView, value: Float, index: Int): String {
+        return if (index == 0) {
+            "건"
+        } else {
+            ""
+        }
     }
 
     override fun chartViewAxisText(chartView: ST3ChartView, axis: ST3ChartAxis): String {
