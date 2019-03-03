@@ -1,4 +1,4 @@
-package dabangapp.com.chart.utils
+package com.github.jmkim0213.chart.utils
 
 import android.util.Log
 

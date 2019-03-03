@@ -1,8 +1,8 @@
-package dabangapp.com.chart.base
+package com.github.jmkim0213.chart.base
 
 import android.graphics.Color
 
-interface ST3ChartDataSet<Entry> {
+interface MooChartDataSet<Entry> {
     var entries : List<Entry>
     var color   : Int
 }

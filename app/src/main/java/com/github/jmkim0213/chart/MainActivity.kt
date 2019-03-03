@@ -1,31 +1,30 @@
-package dabangapp.com.chart
+package com.github.jmkim0213.chart
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.TypedValue
 import android.widget.TextView
-import dabangapp.com.chart.bar.ST3ChartBarData
-import dabangapp.com.chart.bar.ST3ChartBarDataEntry
-import dabangapp.com.chart.bar.ST3ChartBarDataSet
-import dabangapp.com.chart.base.ST3ChartAxis
-import dabangapp.com.chart.line.ST3ChartLineData
-import dabangapp.com.chart.line.ST3ChartLineDataEntry
-import dabangapp.com.chart.line.ST3ChartLineDataSet
-import dabangapp.com.chart.utils.TypedValueUtils
+import com.github.jmkim0213.chart.bar.MooChartBarData
+import com.github.jmkim0213.chart.bar.MooChartBarDataEntry
+import com.github.jmkim0213.chart.bar.MooChartBarDataSet
+import com.github.jmkim0213.chart.base.MooChartAxis
+import com.github.jmkim0213.chart.line.MooChartLineData
+import com.github.jmkim0213.chart.line.MooChartLineDataEntry
+import com.github.jmkim0213.chart.line.MooChartLineDataSet
+import com.github.jmkim0213.chart.utils.TypedValueUtils
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
-    private val mNumberOfMonth  : Int           = 12
+class MainActivity : AppCompatActivity(), MooChartViewDelegate {
+    private val mNumberOfMonth  : Int           = 36
     private var mSelectTextView : TextView?     = null
-    private var mChartView      : ST3ChartView? = null
+    private var mChartView      : MooChartView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mSelectTextView = findViewById(R.id.main_activity_TextView_selected)
-        mChartView = findViewById(R.id.main_activity_ST3ChartView)
+        mChartView = findViewById(R.id.main_activity_MooChartView)
 
         initChartView()
         initChartAxis()
@@ -52,10 +51,10 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
     }
 
     private fun initChartAxis() {
-        val axises = ArrayList<ST3ChartAxis>()
+        val axises = ArrayList<MooChartAxis>()
         for (i in 0..(mNumberOfMonth - 1)) {
             val text = String.format("2019.%02d", i + 1)
-            axises.add(ST3ChartAxis(text, text))
+            axises.add(MooChartAxis(text, text))
         }
 
         mChartView?.axises = axises
@@ -69,29 +68,29 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
     private fun initChartBar() {
         val random = Random()
 
-        val entries1: ArrayList<ST3ChartBarDataEntry> = ArrayList()
+        val entries1: ArrayList<MooChartBarDataEntry> = ArrayList()
 
         for (i in 0..(mNumberOfMonth - 1)) {
             val value = 40 + random.nextInt(60)
-            val entry = ST3ChartBarDataEntry(value.toFloat())
+            val entry = MooChartBarDataEntry(value.toFloat())
             entries1.add(entry)
         }
 
-        val dataSet1 = ST3ChartBarDataSet(entries1)
+        val dataSet1 = MooChartBarDataSet(entries1)
         dataSet1.color = 0xFF80D5DC.toInt()
 
-        val entries2: ArrayList<ST3ChartBarDataEntry> = ArrayList()
+        val entries2: ArrayList<MooChartBarDataEntry> = ArrayList()
         for (i in 0..(mNumberOfMonth - 1)) {
             val value = 40 + random.nextInt(60)
-            val entry = ST3ChartBarDataEntry(value.toFloat())
+            val entry = MooChartBarDataEntry(value.toFloat())
             entries2.add(entry)
         }
 
-        var dataSet2 = ST3ChartBarDataSet(entries2)
+        var dataSet2 = MooChartBarDataSet(entries2)
         dataSet2.color = 0xFFBBDDFF.toInt()
 
 
-        var data = ST3ChartBarData(listOf(dataSet1, dataSet2))
+        var data = MooChartBarData(listOf(dataSet1, dataSet2))
         data.maxValue = 150.0f
         data.groupSpace = 0.5f
 
@@ -101,14 +100,14 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
 
     private fun initChartLine() {
         val random = Random()
-        val entries1: ArrayList<ST3ChartLineDataEntry> = ArrayList()
+        val entries1: ArrayList<MooChartLineDataEntry> = ArrayList()
         for (i in 0..(this.mNumberOfMonth - 1)) {
             val value = 5000 + random.nextInt(5000)
-            val entry = ST3ChartLineDataEntry(value.toFloat())
+            val entry = MooChartLineDataEntry(value.toFloat())
             entries1.add(entry)
         }
 
-        var dataSet1 = ST3ChartLineDataSet(entries1)
+        var dataSet1 = MooChartLineDataSet(entries1)
         dataSet1.color = 0xFF80DCBC.toInt()
         dataSet1.circleColor = 0xFF80DCBC.toInt()
         dataSet1.holeColor = Color.WHITE
@@ -118,14 +117,14 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         dataSet1.circleBorder = TypedValueUtils.dpToPixel(this, 1.0f)
         dataSet1.width = TypedValueUtils.dpToPixel(this, 1.0f)
 
-        val entries2: ArrayList<ST3ChartLineDataEntry> = ArrayList()
+        val entries2: ArrayList<MooChartLineDataEntry> = ArrayList()
         for (i in 0..(this.mNumberOfMonth - 1)) {
             val value = 8000 + random.nextInt(5000)
-            val entry = ST3ChartLineDataEntry(value.toFloat())
+            val entry = MooChartLineDataEntry(value.toFloat())
             entries2.add(entry)
         }
 
-        var dataSet2 = ST3ChartLineDataSet(entries2)
+        var dataSet2 = MooChartLineDataSet(entries2)
         dataSet2.color = 0xFF6CAAE7.toInt()
         dataSet2.circleColor = 0xFF6CAAE7.toInt()
         dataSet2.holeColor = Color.WHITE
@@ -135,7 +134,7 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         dataSet2.circleBorder = TypedValueUtils.dpToPixel(this, 1.0f)
         dataSet2.width = TypedValueUtils.dpToPixel(this, 1.0f)
 
-        val data = ST3ChartLineData(listOf(dataSet1, dataSet2))
+        val data = MooChartLineData(listOf(dataSet1, dataSet2))
         data.maxValue = 20000.0f
 
         mChartView?.lineData = data
@@ -144,11 +143,11 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         mChartView?.lineAxisInterval = (data.maxValue / 5).toInt()
     }
 
-    override fun chartViewLineAxisText(chartView: ST3ChartView, value: Float, index: Int): String {
+    override fun chartViewLineAxisText(chartView: MooChartView, value: Float, index: Int): String {
         return String.format("%.1f억", (value / 10000))
     }
 
-    override fun chartViewRightAxisText(chartView: ST3ChartView, value: Float, index: Int): String {
+    override fun chartViewRightAxisText(chartView: MooChartView, value: Float, index: Int): String {
         return if (index == 0) {
             "건"
         } else {
@@ -156,11 +155,11 @@ class MainActivity : AppCompatActivity(), ST3ChartViewDelegate {
         }
     }
 
-    override fun chartViewAxisText(chartView: ST3ChartView, axis: ST3ChartAxis): String {
+    override fun chartViewAxisText(chartView: MooChartView, axis: MooChartAxis): String {
         return axis.text
     }
 
-    override fun chartViewDidSelected(chartView: ST3ChartView, axis: ST3ChartAxis?) {
+    override fun chartViewDidSelected(chartView: MooChartView, axis: MooChartAxis?) {
         val data = axis?.data as? String
         mSelectTextView?.text = "select: $data"
     }

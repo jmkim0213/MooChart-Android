@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="dabangapp.com.chart">
+          package="com.github.jmkim0213.chart">
 
     <application
             android:allowBackup="true"

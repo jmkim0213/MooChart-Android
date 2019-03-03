@@ -11,11 +11,11 @@
             android:id="@+id/main_activity_TextView_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/main_activity_ST3ChartView"
+            android:layout_above="@id/main_activity_MooChartView"
             android:text="selected: "/>
 
-    <dabangapp.com.chart.ST3ChartView
-            android:id="@+id/main_activity_ST3ChartView"
+    <com.github.jmkim0213.chart.MooChartView
+            android:id="@+id/main_activity_MooChartView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_centerInParent="true"/>

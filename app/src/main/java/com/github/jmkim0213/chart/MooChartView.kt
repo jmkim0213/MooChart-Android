@@ -1,29 +1,28 @@
-package dabangapp.com.chart
+package com.github.jmkim0213.chart
 
 import android.content.Context
 import android.graphics.*
 import android.util.*
 import android.view.MotionEvent
 import android.view.View
-import dabangapp.com.chart.bar.ST3ChartBarData
-import dabangapp.com.chart.base.ST3ChartAxis
-import dabangapp.com.chart.line.ST3ChartLineData
-import dabangapp.com.chart.utils.DBLog
+import com.github.jmkim0213.chart.bar.MooChartBarData
+import com.github.jmkim0213.chart.base.MooChartAxis
+import com.github.jmkim0213.chart.line.MooChartLineData
 
-interface ST3ChartViewDelegate {
-    fun chartViewLineAxisText(chartView: ST3ChartView, value: Float, index: Int): String
-    fun chartViewRightAxisText(chartView: ST3ChartView, value: Float, index: Int): String
-    fun chartViewAxisText(chartView: ST3ChartView, axis: ST3ChartAxis): String
-    fun chartViewDidSelected(chartView: ST3ChartView, axis: ST3ChartAxis?)
+interface MooChartViewDelegate {
+    fun chartViewLineAxisText(chartView: MooChartView, value: Float, index: Int): String
+    fun chartViewRightAxisText(chartView: MooChartView, value: Float, index: Int): String
+    fun chartViewAxisText(chartView: MooChartView, axis: MooChartAxis): String
+    fun chartViewDidSelected(chartView: MooChartView, axis: MooChartAxis?)
 }
 
-class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class MooChartView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val viewSize            : RectF                 = RectF(0.0f, 0.0f, 0.0f, 0.0f)
     private val paint               : Paint                 = Paint()
 
-    var barData                     : ST3ChartBarData?      = null
-    var lineData                    : ST3ChartLineData?     = null
-    var axises                      : List<ST3ChartAxis>    = ArrayList()
+    var barData                     : MooChartBarData?      = null
+    var lineData                    : MooChartLineData?     = null
+    var axises                      : List<MooChartAxis>    = ArrayList()
 
     var axisFont                    : Float                 = 9.0f
     var axisColor                   : Int                   = Color.BLACK
@@ -50,9 +49,9 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var horizontalIndicatorColor    : Int                   = Color.GRAY
     var highlightIndicatorColor     : Int                   = Color.GRAY
 
-    private var selectedAxis        : ST3ChartAxis?         = null
+    private var selectedAxis        : MooChartAxis?         = null
 
-    var delegate                    : ST3ChartViewDelegate? = null
+    var delegate                    : MooChartViewDelegate? = null
 
     private val chartArea               : RectF
         get() {
@@ -110,7 +109,7 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    private fun findAxisByMotionEvent(event: MotionEvent): ST3ChartAxis? {
+    private fun findAxisByMotionEvent(event: MotionEvent): MooChartAxis? {
         val chartWidth = this.chartArea.width()
         val groupCount = this.axises.size
         val groupWidth = chartWidth / groupCount
@@ -354,11 +353,11 @@ class ST3ChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return this.delegate?.chartViewRightAxisText(this, value, index) ?: "$value"
     }
 
-    private fun axisText(axis: ST3ChartAxis): String {
+    private fun axisText(axis: MooChartAxis): String {
         return this.delegate?.chartViewAxisText(this, axis) ?: axis.text
     }
 
-    private fun notifyDidSelected(axis: ST3ChartAxis?) {
+    private fun notifyDidSelected(axis: MooChartAxis?) {
         this.delegate?.chartViewDidSelected(this, axis)
     }
 }

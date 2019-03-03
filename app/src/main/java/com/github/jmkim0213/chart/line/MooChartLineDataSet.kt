@@ -1,11 +1,10 @@
-package dabangapp.com.chart.line
+package com.github.jmkim0213.chart.line
 
 import android.graphics.Color
-import dabangapp.com.chart.bar.ST3ChartBarDataEntry
-import dabangapp.com.chart.base.ST3ChartDataSet
+import com.github.jmkim0213.chart.base.MooChartDataSet
 
-class ST3ChartLineDataSet: ST3ChartDataSet<ST3ChartLineDataEntry> {
-    override var entries    : List<ST3ChartLineDataEntry>   = ArrayList()
+class MooChartLineDataSet: MooChartDataSet<MooChartLineDataEntry> {
+    override var entries    : List<MooChartLineDataEntry>   = ArrayList()
     override var color      : Int                           = Color.BLUE
     var width               : Float                         = 1.0f
 
@@ -17,7 +16,7 @@ class ST3ChartLineDataSet: ST3ChartDataSet<ST3ChartLineDataEntry> {
     var holeColor           : Int                           = Color.BLUE
     var circleBorderColor   : Int                           = Color.WHITE
 
-    constructor(entries: List<ST3ChartLineDataEntry>) {
+    constructor(entries: List<MooChartLineDataEntry>) {
         this.entries = entries
     }
 }

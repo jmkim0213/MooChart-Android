@@ -1,9 +1,9 @@
-package dabangapp.com.chart.base
+package com.github.jmkim0213.chart.base
 
 import java.util.*
 
 
-class ST3ChartAxis {
+class MooChartAxis {
     var text        : String    = ""
     var data        : Any?     = null
 
